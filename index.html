@@ -1,46 +1,3 @@
-<?php 
-    // **************************************************
-    // 1. การกำหนดช่วงเวลาปัจจุบันสำหรับการตรวจสอบ
-    // **************************************************
-    // กำหนดวันที่และเวลาปัจจุบัน (ใช้ฟังก์ชัน time() ในโค้ดจริง)
-    $current_time = time(); 
-
-    // **************************************************
-    // 2. การกำหนดช่วงเวลารับสมัคร (สามารถเปลี่ยนวันที่ได้)
-    // **************************************************
-    // ตัวอย่าง: 1 เมษายน 2026 - 5 เมษายน 2026
-    $start_date_str = '2026-04-01 08:30:00';
-    $end_date_str = '2026-04-05 16:30:00';
-
-    // แปลงเป็น Timestamp เพื่อเปรียบเทียบ
-    $start_timestamp = strtotime($start_date_str);
-    $end_timestamp = strtotime($end_date_str);
-    
-    // ตรวจสอบสถานะการรับสมัคร
-    $is_m1_open = ($current_time >= $start_timestamp && $current_time <= $end_timestamp);
-    $is_m4_open = $is_m1_open; // ใช้ช่วงเวลาเดียวกันเป็นตัวอย่าง
-    
-    // **************************************************
-    // 3. จำลองฟังก์ชันการดึงข้อมูลสรุปจากฐานข้อมูล (โค้ดจริงจะต้องเชื่อมต่อ DB)
-    // **************************************************
-    function get_summary($level) {
-        // ในระบบจริง: เชื่อมต่อฐานข้อมูลและเรียกใช้ SQL QUERY 
-        if ($level == 'M1') {
-            return [
-                'total_applicants' => 125, // สมมติว่าดึงมาจาก DB
-                'available_slots' => 150
-            ];
-        } else {
-            return [
-                'total_applicants' => 110,
-                'available_slots' => 120
-            ];
-        }
-    }
-    $m1_summary = get_summary('M1');
-    $m4_summary = get_summary('M4');
-?>
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -48,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าแรก - ระบบรับสมัครนักเรียนออนไลน์</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css"> </head>
+    </head>
 <body>
     <header>
         <h1>ระบบรับสมัครนักเรียนออนไลน์</h1>
         <nav>
-            <ul>
-                <li><a href="index.php">หน้าแรก</a></li>
+            <ul id="main-nav">
+                <li><a href="index.html">หน้าแรก</a></li>
                 
-                <?php if ($is_m1_open): ?>
-                    <li><a href="apply_m1.php" class="apply-link primary-btn">รับสมัคร ม.1</a></li>
-                <?php endif; ?>
-
-                <?php if ($is_m4_open): ?>
-                    <li><a href="apply_m4.php" class="apply-link primary-btn">รับสมัคร ม.4</a></li>
-                <?php endif; ?>
+                <li id="nav-m1" style="display:none;"><a href="apply_m1.php" class="apply-link primary-btn">รับสมัคร ม.1</a></li>
+                <li id="nav-m4" style="display:none;"><a href="apply_m4.php" class="apply-link primary-btn">รับสมัคร ม.4</a></li>
                 
                 <li><a href="login.php" class="login-link secondary-btn">ลงชื่อเข้าใช้</a></li>
             </ul>
@@ -76,45 +28,36 @@
         </section>
 
         <section class="summary-section">
+            
             <div class="summary-box m1-summary">
                 <h3>สรุปการสมัคร ม.1</h3>
-                <p>จำนวนผู้สมัครทั้งหมด: <strong><?php echo number_format($m1_summary['total_applicants']); ?></strong> คน</p>
-                <p>จำนวนที่นั่งที่เปิดรับ: <strong><?php echo number_format($m1_summary['available_slots']); ?></strong> ที่</p>
-                <p class="status">สถานะ: 
-                    <?php if ($is_m1_open): ?>
-                        <span class="open">เปิดรับสมัคร</span>
-                    <?php else: ?>
-                        <span class="closed">ปิดรับสมัคร</span>
-                    <?php endif; ?>
-                </p>
+                <p>จำนวนผู้สมัครทั้งหมด: <strong id="m1-applicants">รอข้อมูล...</strong> คน</p>
+                <p>จำนวนที่นั่งที่เปิดรับ: <strong id="m1-slots">รอข้อมูล...</strong> ที่</p>
+                <p class="status">สถานะ: <span id="m1-status">ตรวจสอบสถานะ...</span></p>
             </div>
 
             <div class="summary-box m4-summary">
                 <h3>สรุปการสมัคร ม.4</h3>
-                <p>จำนวนผู้สมัครทั้งหมด: <strong><?php echo number_format($m4_summary['total_applicants']); ?></strong> คน</p>
-                <p>จำนวนที่นั่งที่เปิดรับ: <strong><?php echo number_format($m4_summary['available_slots']); ?></strong> ที่</p>
-                <p class="status">สถานะ: 
-                    <?php if ($is_m4_open): ?>
-                        <span class="open">เปิดรับสมัคร</span>
-                    <?php else: ?>
-                        <span class="closed">ปิดรับสมัคร</span>
-                    <?php endif; ?>
-                </p>
+                <p>จำนวนผู้สมัครทั้งหมด: <strong id="m4-applicants">รอข้อมูล...</strong> คน</p>
+                <p>จำนวนที่นั่งที่เปิดรับ: <strong id="m4-slots">รอข้อมูล...</strong> ที่</p>
+                <p class="status">สถานะ: <span id="m4-status">ตรวจสอบสถานะ...</span></p>
             </div>
         </section>
         
         <section class="schedule-info">
             <h2>กำหนดการรับสมัครประจำปี</h2>
             <div class="schedule-detail">
-                <p>การรับสมัครจะเปิดระหว่าง <strong><?php echo date("d F", $start_timestamp); ?></strong> ถึง <strong><?php echo date("d F Y", $end_timestamp); ?></strong></p>
-                <p>เวลาทำการ: <strong><?php echo date("H:i", $start_timestamp); ?> - <?php echo date("H:i", $end_timestamp); ?></strong> ของทุกวันในช่วงเวลาที่กำหนด</p>
-                <p><em>*ระบบจะปิด/เปิดอัตโนมัติตามเวลาที่ระบุ เพื่อรักษาความโปร่งใสและยุติธรรมในการสมัคร</em></p>
+                <p>การรับสมัครจะเปิดระหว่าง <strong id="start-date-display">...</strong> ถึง <strong id="end-date-display">...</strong></p>
+                <p>เวลาทำการ: <strong id="time-range-display">...</strong> ของทุกวันในช่วงเวลาที่กำหนด</p>
+                <p><em>*ระบบจะปิด/เปิดอัตโนมัติตามเวลาที่ระบุ (ตรวจสอบด้วยเวลาของอุปกรณ์คุณ)</em></p>
             </div>
         </section>
     </main>
     
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> โรงเรียนกระสังพิทยาคม | <a href="login.php">เข้าสู่ระบบผู้ดูแล</a></p>
+        <p>&copy; 2025 โรงเรียนกระสังพิทยาคม | <a href="login.php">เข้าสู่ระบบผู้ดูแล</a></p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
