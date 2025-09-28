@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าแรก - โรงเรียนกระสังพิทยาคม</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css">
-</head>
+<header>
+    <h1>ระบบรับสมัครนักเรียนออนไลน์</h1>
+    <nav>
+        <ul>
+            <li><a href="index.php">หน้าแรก</a></li>
+            
+            <?php if ($is_m1_open): ?>
+                <li><a href="apply_m1.php" class="apply-link primary-btn">รับสมัคร ม.1</a></li>
+            <?php endif; ?>
+
+            <?php if ($is_m4_open): ?>
+                <li><a href="apply_m4.php" class="apply-link primary-btn">รับสมัคร ม.4</a></li>
+            <?php endif; ?>
+            
+            <li><a href="login.php" class="login-link secondary-btn">ลงชื่อเข้าใช้</a></li>
+        </ul>
+    </nav>
+</header>
 <body>
     <?php 
         // **************************************************
