@@ -1,115 +1,181 @@
 /* =======================================
-   BASE STYLES
+   BASE STYLES: สดใสและเป็นมิตร
    ======================================= */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Sukhumvit', 'Arial', sans-serif; /* เปลี่ยนฟอนต์ถ้ามี */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* เพิ่มสีพื้นหลังเบาๆ */
-}
-
-header, footer {
-    background-color: #333; /* สีเข้มสำหรับ Header/Footer */
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto; /* จัดให้อยู่ตรงกลางหน้าจอ */
-}
-
-h2 {
+    background-color: #f4f7f9; /* สีพื้นหลังสว่างมาก */
     color: #333;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
 }
 
 /* =======================================
-   FORM LAYOUT (Alignment and Sections)
+   HEADER & NAVIGATION
    ======================================= */
+header {
+    background-color: #007bff; /* สีน้ำเงินสดใส */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-/* จัดรูปแบบ Fieldset และ Legend */
-.form-section {
-    border: 1px solid #ccc; /* เส้นขอบสำหรับ Fieldset */
-    padding: 20px;
+header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* จัดเรียงเมนูในแนวนอน */
+    justify-content: center;
+    align-items: center;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+/* ปุ่มหลักสำหรับสมัคร (ดูโดดเด่น) */
+.primary-btn {
+    background-color: #28a745; /* สีเขียวสดใส */
+}
+
+.secondary-btn {
+    background-color: #6c757d; /* สีเทาเข้มสำหรับ Login */
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* เมื่อโฮเวอร์ */
+}
+
+/* =======================================
+   MAIN CONTENT & HERO SECTION
+   ======================================= */
+main {
+    padding: 30px 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #e3f2fd; /* สีฟ้าอ่อนมากๆ */
+    border-radius: 10px;
     margin-bottom: 30px;
-    background-color: #fff;
-    width: 80%; /* กำหนดความกว้างเป็น 80% */
-    max-width: 800px; /* ความกว้างสูงสุด 800px */
+    border: 1px solid #bbdefb;
 }
 
-.form-section legend {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #0056b3; /* สีสำหรับหัวข้อหลัก */
-    padding: 0 10px;
+.hero h2 {
+    color: #007bff;
+    font-size: 1.8em;
+    margin-top: 0;
 }
 
-/* กำหนดให้กลุ่ม Input/Label อยู่ในแนวตั้ง */
-.form-row {
-    display: flex; /* ใช้ Flexbox เพื่อจัดเรียงหลายคอลัมน์ */
-    flex-wrap: wrap;
-    gap: 20px; /* ระยะห่างระหว่างกลุ่มข้อมูล */
-    margin-bottom: 15px;
-}
-
-.form-group {
-    flex: 1; /* ทำให้แต่ละ group ขยายตัวเท่าๆ กัน */
-    min-width: 250px; /* กำหนดความกว้างขั้นต่ำเพื่อไม่ให้แคบเกินไป */
-    display: flex;
-    flex-direction: column; /* จัด label และ input ให้อยู่ในแนวตั้ง */
-}
-
-/* =======================================
-   FORM ELEMENTS
-   ======================================= */
-
-label {
-    /* display: block; -- ถูกกำหนดใน .form-group ด้วย flex-direction: column; แล้ว */
-    margin-bottom: 5px;
-    font-weight: bold;
+.hero p {
+    font-size: 1.1em;
     color: #555;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="number"],
-select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    width: 100%; /* ให้เต็มความกว้างของ form-group */
-    margin-top: auto; /* จัดให้อยู่ด้านล่าง */
+/* =======================================
+   SUMMARY SECTION (สรุปยอดสมัคร)
+   ======================================= */
+.summary-section {
+    display: flex;
+    justify-content: space-around; /* จัดให้อยู่ระหว่างกัน */
+    gap: 30px;
+    margin-bottom: 40px;
 }
 
-/* สไตล์สำหรับ Radio Buttons (ประสงค์/ไม่ประสงค์) */
-.input-group label {
-    font-weight: normal; /* ทำให้ Label ของ Radio ไม่เป็นตัวหนา */
-    margin-left: 5px;
-    display: inline-block;
+.summary-box {
+    flex: 1;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* เงาให้ดูมีมิติ */
+    transition: transform 0.3s ease;
+}
+
+.summary-box:hover {
+    transform: translateY(-5px); /* เลื่อนขึ้นเล็กน้อยเมื่อโฮเวอร์ */
+}
+
+.summary-box h3 {
+    border-bottom: 3px solid #ffc107; /* สีเหลืองสดใสเป็นเส้นแบ่ง */
+    padding-bottom: 10px;
+    margin-top: 0;
+    color: #007bff;
+    font-size: 1.4em;
+}
+
+.summary-box p {
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+/* สถานะการรับสมัคร */
+.status {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.open {
+    color: #28a745; /* สีเขียวสำหรับเปิดรับ */
+    font-size: 1.2em;
+}
+
+.closed {
+    color: #dc3545; /* สีแดงสำหรับปิดรับ */
+    font-size: 1.2em;
 }
 
 /* =======================================
-   SUBMIT BUTTON
+   SCHEDULE INFO (กำหนดการ)
    ======================================= */
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+.schedule-info {
+    background-color: #fff3cd; /* สีเหลืองอ่อนเตือนใจ */
+    border: 1px solid #ffeeba;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+.schedule-info h2 {
+    color: #856404; /* สีน้ำตาลเข้ม */
+    border-bottom: none;
+}
+
+.schedule-info p {
+    color: #856404;
+    font-size: 1.1em;
+}
+
+.schedule-info em {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #a08c3e;
+}
+
+/* =======================================
+   FOOTER
+   ======================================= */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9em;
 }
