@@ -3,79 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สมัคร ม.1 - โรงเรียนกระสังพิทยาคม</title>
+    <title>หน้าแรก - โรงเรียนกระสังพิทยาคม</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php 
+        // **************************************************
+        // ส่วนของ PHP สำหรับการกำหนดค่าและการตรวจสอบเวลา
+        // **************************************************
+        
+        // กำหนดช่วงเวลารับสมัคร (ตัวอย่าง: 1 เมษายน - 5 เมษายน)
+        $start_date = '2025-04-01 08:30:00';
+        $end_date = '2025-04-05 16:30:00';
+        $current_time = time();
+        $is_m1_open = ($current_time >= strtotime($start_date) && $current_time <= strtotime($end_date));
+        $is_m4_open = $is_m1_open; // ใช้ช่วงเวลาเดียวกันเป็นตัวอย่าง
+        
+        // **************************************************
+        // จำลองฟังก์ชันการดึงข้อมูลสรุปจากฐานข้อมูล
+        // **************************************************
+        function get_summary($level) {
+            // โค้ดจริงจะมีการเชื่อมต่อฐานข้อมูลและ query ข้อมูล
+            if ($level == 'M1') {
+                return [
+                    'total_applicants' => 125,
+                    'available_slots' => 150
+                ];
+            } else {
+                return [
+                    'total_applicants' => 110,
+                    'available_slots' => 120
+                ];
+            }
+        }
+        $m1_summary = get_summary('M1');
+        $m4_summary = get_summary('M4');
+    ?>
+
+    <header>
+        <h1>ระบบรับสมัครนักเรียนออนไลน์</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">หน้าแรก</a></li>
+                
+                <?php if ($is_m1_open): ?>
+                    <li><a href="apply_m1.php" class="apply-link">รับสมัคร ม.1</a></li>
+                <?php endif; ?>
+
+                <?php if ($is_m4_open): ?>
+                    <li><a href="apply_m4.php" class="apply-link">รับสมัคร ม.4</a></li>
+                <?php endif; ?>
+                
+                <li><a href="login.php" class="login-link">ลงชื่อเข้าใช้</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-        <section>
-            <h2>รายละเอียดการรับสมัคร ม.1</h2>
-            <p>คุณสมบัติผู้สมัคร...</p>
-            <form action="submit_m1.php" method="post">
-                <div class="form-section">
-                    <h3>ข้อมูลส่วนตัว</h3>
-                    <div class="form-group">
-                        <label for="room2">ประสงค์จะเข้าห้องวิทย์พลังสิบ :</label><br>
-                        <input type="radio" id="room2_yes" name="room2" value="yes">
-                        <label for="room2_yes">ประสงค์</label>
-                        <input type="radio" id="room2_no" name="room2" value="no">
-                        <label for="room2_no">ไม่ประสงค์</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_card">เลขประจำตัวประชาชน:</label>
-                        <input type="text" id="id_card" name="id_card" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="pre_name">คำนำหน้าชื่อ:</label>
-                        <select id="pre_name" name="pre_name" required>
-                            <option value="">-- เลือกคำนำหน้าชื่อ --</option>
-                            <option value="เด็กชาย">เด็กชาย</option>
-                            <option value="เด็กหญิง">เด็กหญิง</option>
-                            <option value="นาย">นาย</option>
-                            <option value="นางสาว">นางสาว</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">ชื่อ:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="surname">นามสกุล:</label>
-                        <input type="text" id="surname" name="surname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthdate">วัน เดือน ปี เกิด:</label>
-                        <input type="date" id="birthdate" name="birthdate" required>
-                    </div>
-                    </div>
+        <section class="hero">
+            <h2>โรงเรียนกระสังพิทยาคม: เปิดรับสมัครนักเรียนปีการศึกษา 25XX</h2>
+            <p>กรุณาตรวจสอบรายละเอียดและช่วงเวลาการรับสมัครของแต่ละระดับชั้นก่อนดำเนินการต่อ</p>
+        </section>
 
-                <div class="form-section">
-                    <h3>ข้อมูลการศึกษา</h3>
-                    <div class="form-group">
-                        <label for="school">โรงเรียนเดิม:</label>
-                        <input type="text" id="school" name="school" required>
-                    </div>
-                    </div>
+        <section class="summary-section">
+            <div class="summary-box m1-summary">
+                <h3>สรุปการสมัคร ม.1</h3>
+                <p>จำนวนผู้สมัครทั้งหมด: **<?php echo $m1_summary['total_applicants']; ?>** คน</p>
+                <p>จำนวนที่นั่งที่เปิดรับ: **<?php echo $m1_summary['available_slots']; ?>** ที่</p>
+                <p class="status">สถานะ: <?php echo $is_m1_open ? '<span class="open">เปิดรับสมัคร</span>' : '<span class="closed">ปิดรับสมัคร</span>'; ?></p>
+            </div>
 
-                <div class="form-section">
-                    <h3>ข้อมูลครอบครัว</h3>
-                    <div class="form-group">
-                        <h4>ข้อมูลบิดา</h4>
-                        <label for="father_id_card">เลขประจำตัวประชาชน:</label>
-                        <input type="text" id="father_id_card" name="father_id_card">
-                    </div>
-                    </div>
-
-                <div class="form-group">
-                    <input type="submit" value="สมัคร">
-                </div>
-            </form>
+            <div class="summary-box m4-summary">
+                <h3>สรุปการสมัคร ม.4</h3>
+                <p>จำนวนผู้สมัครทั้งหมด: **<?php echo $m4_summary['total_applicants']; ?>** คน</p>
+                <p>จำนวนที่นั่งที่เปิดรับ: **<?php echo $m4_summary['available_slots']; ?>** ที่</p>
+                <p class="status">สถานะ: <?php echo $is_m4_open ? '<span class="open">เปิดรับสมัคร</span>' : '<span class="closed">ปิดรับสมัคร</span>'; ?></p>
+            </div>
+        </section>
+        
+        <section class="schedule-info">
+            <h2>กำหนดการรับสมัครประจำปี</h2>
+            <div class="schedule-detail">
+                <p>การรับสมัครจะเปิดระหว่าง **<?php echo date("d F", strtotime($start_date)); ?>** ถึง **<?php echo date("d F Y", strtotime($end_date)); ?>**</p>
+                <p>เวลาทำการ: **<?php echo date("H:i", strtotime($start_date)); ?> - <?php echo date("H:i", strtotime($end_date)); ?>** ของทุกวันในช่วงเวลาที่กำหนด</p>
+                <p><em>*ระบบจะปิดอัตโนมัติตามเวลาที่ระบุ เพื่อรักษาความโปร่งใสและยุติธรรมในการสมัคร</em></p>
+            </div>
         </section>
     </main>
+    
     <footer>
-        <p>ติดต่อ: ...</p>
+        <p>&copy; 2024 โรงเรียนกระสังพิทยาคม</p>
     </footer>
 
     <script src="script.js"></script>
